@@ -6,21 +6,22 @@ public class NPCTimeBody : TimeBody
 {
     protected new List<NPCStateInTime> StatesInTime;
     protected new NPCStateInTime CurrentStateInTime;
-    NPC npcScript;
+
+    private NPC npcScript;
 
     protected override void Start()
     {
-        npcScript = transform.GetComponentInChildren<NPC>();
-
         StatesInTime = new List<NPCStateInTime>();
         rb = GetComponent<Rigidbody>();
+
+        npcScript = transform.GetComponentInChildren<NPC>();
     }
 
     protected override void Rewind()
     {
         if (StatesInTime.Count > 0)
         {
-            npcScript.animator.SetBool("TimeRewinding", true);
+            npcScript.AIAnimator.SetBool("TimeRewinding", true);
             CurrentStateInTime = StatesInTime[0];
 
             transform.position = CurrentStateInTime.position;
@@ -37,25 +38,36 @@ public class NPCTimeBody : TimeBody
 
     protected override void Record()
     {
-        if(StatesInTime.Count > Mathf.Round(recordTime/Time.fixedDeltaTime))
+        if (StatesInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
         {
-            Debug.Log(StatesInTime.Count);
-            StatesInTime.RemoveAt(StatesInTime.Count-1);
+            StatesInTime.RemoveAt(StatesInTime.Count - 1);
         }
-        
+
         StatesInTime.Insert(0, new NPCStateInTime(transform.position, transform.rotation, npcScript.routine.currentWaypointIndex, npcScript.playerDetector.StatusTimer));
     }
 
     protected override void StartRewind()
     {
-         isRewinding = true;
-         rb.isKinematic = true;
+        isRewinding = true;
+        rb.isKinematic = true;
     }
 
     protected override void StopRewind()
     {
         isRewinding = false;
         rb.isKinematic = false;
-        npcScript.animator.SetBool("TimeRewinding", false);
+        npcScript.AIAnimator.SetBool("TimeRewinding", false);
+    }
+
+    protected override void StopTime()
+    {
+        isTimeStopped = true;
+        npcScript.AIAnimator.SetBool("TimeStoppedManually", true);
+    }
+
+    protected override void ResumeTime()
+    {
+        isTimeStopped = false;
+        npcScript.AIAnimator.SetBool("TimeStoppedManually", false);
     }
 }

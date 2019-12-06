@@ -11,7 +11,7 @@ public class RotateTowardsAction : Action
     {
         if (npcAvatarTransform != null)
         {
-            npcScript = npcAvatarTransform.GetComponentInChildren<NPC>();
+            npcScript = npcAvatarTransform.GetComponent<NPC>();
 
             if (npcScript == null)
             {

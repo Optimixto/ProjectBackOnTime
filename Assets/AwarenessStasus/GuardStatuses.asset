@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98017c0f1c325724d96a142be2d32b92, type: 3}
   m_Name: GuardStatuses
   m_EditorClassIdentifier: 
-  unawareColor: {r: 0, g: 0, b: 0, a: 0}
-  timeToSuspicious: 0.75
+  unawareColor: {r: 1, g: 0.99242336, b: 0.8443396, a: 1}
+  timeToSuspicious: 0.5
   suspiciousColor: {r: 1, g: 0.97617406, b: 0, a: 0}
   timeToAlerted: 1.5
   alertedColor: {r: 1, g: 0, b: 0, a: 0}
-  defaultMovSpeed: 0
+  defaultMovSpeed: 2.5

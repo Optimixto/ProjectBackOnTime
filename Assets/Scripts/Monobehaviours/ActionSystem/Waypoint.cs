@@ -3,8 +3,9 @@
 public class Waypoint : MonoBehaviour
 {
     public ActionCollection defaultActionCollection;
-    public Vector3 Location;
-    
+    public Vector3 ActionLocation;
+    public bool isResettable = true;
+
     public bool AllActionsDone
     {
         get; private set;
@@ -12,13 +13,16 @@ public class Waypoint : MonoBehaviour
 
     private void Awake()
     {
-        UpdateLocation(transform);
+        UpdateActionLocation(transform);
     }
 
-    public void ResetWaypoint(Animator animator)
+    public void ResetWaypoint()
     {
-        defaultActionCollection.ResetActions();
-        UpdateAllActionsDone();
+        if (isResettable)
+        {
+            defaultActionCollection.ResetActions();
+            UpdateAllActionsDone();
+        }
     }
 
     //Performs all actions associated with this Waypoint
@@ -26,7 +30,7 @@ public class Waypoint : MonoBehaviour
     {
         UpdateAllActionsDone();
 
-        if(!AllActionsDone)
+        if (!AllActionsDone)
         {
             defaultActionCollection.Act();
         }
@@ -51,10 +55,9 @@ public class Waypoint : MonoBehaviour
         return false;
     }
 
-    public void UpdateLocation(Transform transform)
+    public void UpdateActionLocation(Transform transform)
     {
-        Location = transform.position;
-        base.transform.position = Location;
+        ActionLocation = transform.position;
     }
 
     public void UpdateRotation(Transform referenceTransform)
@@ -66,7 +69,7 @@ public class Waypoint : MonoBehaviour
     {
         Gizmos.DrawSphere(transform.position, .2f);
 
-        if(RequiresRotation())
+        if (RequiresRotation())
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(transform.position, transform.forward);

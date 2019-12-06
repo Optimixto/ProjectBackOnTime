@@ -15,7 +15,7 @@ public class PlayerDetector : MonoBehaviour
     {
         get; private set;
     }
-    
+
     public float StatusTimer
     {
         get; private set;
@@ -45,7 +45,7 @@ public class PlayerDetector : MonoBehaviour
             NormalBehavior();
         else
         {
-            npcScript.animator.SetBool("SeeingPlayer", false);
+            npcScript.AIAnimator.SetBool("SeeingPlayer", false);
             UpdateAwarenessColor();
         }
     }
@@ -54,10 +54,10 @@ public class PlayerDetector : MonoBehaviour
     {
         if (CanSeePlayer())
         {
-            npcScript.animator.SetBool("SeeingPlayer", true);
-            npcScript.animator.SetBool("DoneInvestigating", false);
+            npcScript.AIAnimator.SetBool("SeeingPlayer", true);
+            npcScript.AIAnimator.SetBool("DoneInvestigating", false);
             npcScript.StopMovement();
-            npcScript.LastKnownPositionWaypoint.UpdateLocation(Player);
+            npcScript.LastKnownPositionWaypoint.UpdateActionLocation(Player);
             RaiseCurrentStatusTimer();
 
             if (StatusTimer <= awarenessStatuses.timeToSuspicious)
@@ -66,26 +66,26 @@ public class PlayerDetector : MonoBehaviour
             }
             else if (StatusTimer >= awarenessStatuses.timeToSuspicious && StatusTimer < awarenessStatuses.TotalTimeToAlerted)
             {
-                npcScript.animator.SetBool("Suspicious", true);
+                npcScript.AIAnimator.SetBool("Suspicious", true);
                 visionLight.color = awarenessStatuses.suspiciousColor;
             }
             else if (StatusTimer >= awarenessStatuses.TotalTimeToAlerted)
             {
-                npcScript.animator.SetBool("Alerted", true);
+                npcScript.AIAnimator.SetBool("Alerted", true);
                 visionLight.color = awarenessStatuses.alertedColor;
             }
         }
         else if (StatusTimer > 0)
         {
-            npcScript.animator.SetBool("SeeingPlayer", false);
+            npcScript.AIAnimator.SetBool("SeeingPlayer", false);
 
-            if (npcScript.animator.GetBool("DoneInvestigating"))
+            if (npcScript.AIAnimator.GetBool("DoneInvestigating"))
             {
                 ReduceCurrentStatusTimer();
 
                 visionLight.color = awarenessStatuses.unawareColor;
-                npcScript.animator.SetBool("Suspicious", false);
-                npcScript.animator.SetBool("Alerted", false);
+                npcScript.AIAnimator.SetBool("Suspicious", false);
+                npcScript.AIAnimator.SetBool("Alerted", false);
             }
         }
     }
@@ -144,18 +144,18 @@ public class PlayerDetector : MonoBehaviour
 
         if (StatusTimer <= awarenessStatuses.timeToSuspicious)
         {
-            npcScript.animator.SetBool("Suspicious", false);
-            npcScript.animator.SetBool("Alerted", false);
+            npcScript.AIAnimator.SetBool("Suspicious", false);
+            npcScript.AIAnimator.SetBool("Alerted", false);
         }
         else if (StatusTimer >= awarenessStatuses.timeToSuspicious && StatusTimer < awarenessStatuses.TotalTimeToAlerted)
         {
-            npcScript.animator.SetBool("Suspicious", true);
-            npcScript.animator.SetBool("Alerted", false);
+            npcScript.AIAnimator.SetBool("Suspicious", true);
+            npcScript.AIAnimator.SetBool("Alerted", false);
         }
         else if (StatusTimer >= awarenessStatuses.TotalTimeToAlerted)
         {
-            npcScript.animator.SetBool("Suspicious", true);
-            npcScript.animator.SetBool("Alerted", true);
+            npcScript.AIAnimator.SetBool("Suspicious", true);
+            npcScript.AIAnimator.SetBool("Alerted", true);
         }
     }
 

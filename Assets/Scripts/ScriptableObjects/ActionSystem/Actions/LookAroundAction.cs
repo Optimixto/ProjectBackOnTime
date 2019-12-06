@@ -4,10 +4,13 @@ public class LookAroundAction : Action
 {
     public Transform npcAvatarTransform;
     public Transform myWaypointTransform;
+
     [Range(20f, 90f)]
     public float deltaAngle = 45f; // Amount to move left and right from the start point
+
     [Range(0.5f, 5f)]
     public float rotationSpeed = 1.5f;
+
     public int totalLookingLoops = 1;
 
     private Vector3 initialRotationForward;
@@ -17,8 +20,11 @@ public class LookAroundAction : Action
 
     protected override void SpecificInit()
     {
-        initialRotationForward = myWaypointTransform.forward;
-        currentRotationForward = initialRotationForward;
+        if (npcAvatarTransform != null)
+        {
+            initialRotationForward = myWaypointTransform.forward;
+            currentRotationForward = initialRotationForward;
+        }
 
         timesLookedAround = 0;
         sinCounter = 0;
@@ -29,8 +35,8 @@ public class LookAroundAction : Action
         currentRotationForward = Quaternion.Euler(0f, deltaAngle * Mathf.Sin(sinCounter), 0f) * initialRotationForward;
         npcAvatarTransform.forward = currentRotationForward;
 
-        sinCounter += 0.01f*rotationSpeed;
-        
+        sinCounter += 0.01f * rotationSpeed;
+
         if (PassedInitialRotation())
         {
             if (timesLookedAround >= totalLookingLoops)

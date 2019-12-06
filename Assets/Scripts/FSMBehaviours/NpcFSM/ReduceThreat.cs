@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReduceThreat : StateMachineBehaviour
+public class ReduceThreat : NPCBaseFSM
 {
     private PlayerDetector playerDetector;
 
@@ -10,7 +10,7 @@ public class ReduceThreat : StateMachineBehaviour
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        playerDetector = animator.transform.parent.GetComponentInChildren<PlayerDetector>();
+        playerDetector = npcScript.playerDetector;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

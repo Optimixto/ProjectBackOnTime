@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class Routine : MonoBehaviour
 {
+    public int currentWaypointIndex;
+
     public Waypoint CurrentWaypoint
     {
         get; private set;
     }
-
-    [HideInInspector]
-    public int currentWaypointIndex;
 
     private Transform[] waypointsTransforms;
 
@@ -33,7 +32,7 @@ public class Routine : MonoBehaviour
                 Debug.LogError("Missing Waypoint component in " + transform.name);
             }
         }
-        
+
         CurrentWaypoint = waypointsTransforms[0].GetComponent<Waypoint>();
     }
 
@@ -84,6 +83,6 @@ public class Routine : MonoBehaviour
         Gizmos.DrawSphere(startPosition, .4f);
 
         Gizmos.color = Color.white;
-        Gizmos.DrawLine(previousPosition, startPosition); 
+        Gizmos.DrawLine(previousPosition, startPosition);
     }
 }

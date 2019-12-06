@@ -6,14 +6,20 @@ public class TimeBody : MonoBehaviour
 {
     public static float recordTime = 10f;
 
+    [Range(0, 100)]
+    public static float timeStopMax = 3f;
+
+    protected static float timeStopTimer;
+
     protected virtual List<StateInTime> StatesInTime { get; private set; }
 
     protected virtual StateInTime CurrentStateInTime { get; private set; }
 
     public bool isRewinding = false;
-    bool isTimeStopped = false;
-    PlayerInputActions inputAction;
+    public bool isTimeStopped = false;
+
     protected Rigidbody rb;
+    protected PlayerInputActions inputAction;
 
     protected void Awake()
     {
@@ -28,18 +34,28 @@ public class TimeBody : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    protected void FixedUpdate()
+    private void FixedUpdate()
     {
         if (isRewinding)
+        {
+            ResumeTime();
             Rewind();
-        else if(!isTimeStopped)
+        }
+        else if (inputAction.TimePowersControls.StopTime.ReadValue<float>() != 0 && !isRewinding && timeStopTimer > 0)
+            StopTime();
+        else
+        {
+            ResumeTime();
             Record();
+        }
     }
 
     protected virtual void Rewind()
     {
         if (StatesInTime.Count > 0)
         {
+            rb.isKinematic = true;
+
             CurrentStateInTime = StatesInTime[0];
 
             transform.position = CurrentStateInTime.position;
@@ -54,11 +70,8 @@ public class TimeBody : MonoBehaviour
 
     protected virtual void Record()
     {
-        if (StatesInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
-        {
-            Debug.Log(StatesInTime.Count);
+        if (StatesInTime.Count >= Mathf.Round(recordTime / Time.fixedDeltaTime))
             StatesInTime.RemoveAt(StatesInTime.Count - 1);
-        }
 
         StatesInTime.Insert(0, new StateInTime(transform.position, transform.rotation));
     }
@@ -66,7 +79,6 @@ public class TimeBody : MonoBehaviour
     protected virtual void StartRewind()
     {
         isRewinding = true;
-        rb.isKinematic = true;
     }
 
     protected virtual void StopRewind()
@@ -75,14 +87,14 @@ public class TimeBody : MonoBehaviour
         rb.isKinematic = false;
     }
 
-    protected void StopTime()
+    protected virtual void StopTime()
     {
         isTimeStopped = true;
     }
 
-    protected void ResumeTime()
+    protected virtual void ResumeTime()
     {
-        isTimeStopped = true;
+        isTimeStopped = false;
     }
 
     private void OnEnable()

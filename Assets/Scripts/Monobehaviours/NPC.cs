@@ -4,13 +4,11 @@ using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
-    [HideInInspector]
-    public Animator animator;
-    [HideInInspector]
-    public PlayerDetector playerDetector;
     public Routine routine;
     public Waypoint LastKnownPositionWaypoint;
     public float rotationSpeed = 4f;
+    public PlayerDetector playerDetector;
+    public Animator AIAnimator;
 
     private Waypoint currentTarget;
     private NavMeshAgent agent;
@@ -19,10 +17,9 @@ public class NPC : MonoBehaviour
     {
         playerDetector = this.GetComponentInChildren<PlayerDetector>();
         agent = this.GetComponent<NavMeshAgent>();
-        animator = this.GetComponent<Animator>();
+        AIAnimator = this.GetComponent<Animator>();
 
         playerDetector.awarenessStatuses.defaultMovSpeed = agent.speed;
-        
     }
 
     internal void GoToLastSeenPosition()
@@ -36,7 +33,7 @@ public class NPC : MonoBehaviour
 
     internal bool ArrivedAtWaypoint(Waypoint waypoint)
     {
-        var heading = transform.position - currentTarget.Location;
+        var heading = transform.position - currentTarget.ActionLocation;
 
         if (heading.sqrMagnitude <= 1)
         {
@@ -49,7 +46,7 @@ public class NPC : MonoBehaviour
 
     public void GoToCurrentWaypoint()
     {
-        agent.SetDestination(currentTarget.Location);
+        agent.SetDestination(currentTarget.ActionLocation);
         agent.isStopped = false;
     }
 
@@ -65,7 +62,7 @@ public class NPC : MonoBehaviour
 
     public bool ReachedCurrentWaypoint()
     {
-        var heading = transform.position - currentTarget.Location;
+        var heading = transform.position - currentTarget.ActionLocation;
 
         return heading.sqrMagnitude <= 1;
     }

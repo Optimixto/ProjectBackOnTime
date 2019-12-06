@@ -9,17 +9,17 @@ public class Investigate : NPCBaseFSM
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        npcScript.LastKnownPositionWaypoint.ResetWaypoint(animator);
+        npcScript.LastKnownPositionWaypoint.ResetWaypoint();
 
-        playerDetector = animator.transform.parent.GetComponentInChildren<PlayerDetector>();
+        playerDetector = npcScript.playerDetector;
     }
-    
+
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(!npcScript.ReachedCurrentWaypoint())
+        if (!npcScript.ReachedCurrentWaypoint())
             npcScript.GoToLastSeenPosition();
-        
-        if(npcScript.ArrivedAtWaypoint(npcScript.LastKnownPositionWaypoint))
+
+        if (npcScript.ArrivedAtWaypoint(npcScript.LastKnownPositionWaypoint))
             npcScript.LastKnownPositionWaypoint.Act();
 
         if (npcScript.LastKnownPositionWaypoint.AllActionsDone)

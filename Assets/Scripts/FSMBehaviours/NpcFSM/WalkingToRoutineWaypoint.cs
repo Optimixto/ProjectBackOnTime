@@ -5,7 +5,7 @@ using UnityEngine;
 public class WalkingToRoutineWaypoint : NPCBaseFSM
 {
     private Routine routine;
-    
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
@@ -14,9 +14,10 @@ public class WalkingToRoutineWaypoint : NPCBaseFSM
 
         routine.UpdateCurrentWaypointByIndex(routine.currentWaypointIndex);
         npcScript.SetTarget(routine.CurrentWaypoint);
-        routine.CurrentWaypoint.ResetWaypoint(animator);
+
+        routine.CurrentWaypoint.ResetWaypoint();
     }
-    
+
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         npcScript.SetTarget(routine.CurrentWaypoint);

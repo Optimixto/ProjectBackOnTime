@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObservePlayer : NPCBaseFSM
+public class SimulateStopTime : NPCBaseFSM
 {
     private PlayerDetector playerDetector;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        playerDetector = animator.transform.parent.GetComponentInChildren<PlayerDetector>();
+        playerDetector = npcScript.playerDetector;
+        playerDetector.enabled = false;
+        npcScript.StopMovement();
     }
 
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        npcScript.RotateTowardsWaypoint(npcScript.LastKnownPositionWaypoint);
+        playerDetector.enabled = true;
     }
 }

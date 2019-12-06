@@ -112,6 +112,17 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d293f453-d964-47df-8fdc-30e6a95e9d44"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -129,7 +140,7 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""StopTime"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""5efe8ff4-1b6e-4599-9348-22612196bfac"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -150,8 +161,30 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f124c69c-c3ba-4539-86a8-403354042ff3"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RewindTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b641a0f9-5fbc-48f0-915c-918439a95d51"",
                     ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e84ef0ba-9982-40c6-8c9b-d7cc30403a74"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
