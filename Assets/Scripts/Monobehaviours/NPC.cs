@@ -33,7 +33,7 @@ public class NPC : MonoBehaviour
 
     internal bool ArrivedAtWaypoint(Waypoint waypoint)
     {
-        var heading = transform.position - currentTarget.ActionLocation;
+        var heading = transform.position - currentTarget.actionLocation;
 
         if (heading.sqrMagnitude <= 1)
         {
@@ -46,7 +46,7 @@ public class NPC : MonoBehaviour
 
     public void GoToCurrentWaypoint()
     {
-        agent.SetDestination(currentTarget.ActionLocation);
+        agent.SetDestination(currentTarget.actionLocation);
         agent.isStopped = false;
     }
 
@@ -62,7 +62,7 @@ public class NPC : MonoBehaviour
 
     public bool ReachedCurrentWaypoint()
     {
-        var heading = transform.position - currentTarget.ActionLocation;
+        var heading = transform.position - currentTarget.actionLocation;
 
         return heading.sqrMagnitude <= 1;
     }

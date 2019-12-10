@@ -33,6 +33,14 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Value"",
+                    ""id"": ""d2b50f20-f321-4858-ae73-27a7a8412760"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -121,6 +129,28 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd133819-c725-459d-92e5-9d551c9d6675"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""729c164e-a3b2-464b-8297-9ca88374b603"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -239,6 +269,7 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
         m_PlayerMovementControls = asset.FindActionMap("PlayerMovementControls", throwIfNotFound: true);
         m_PlayerMovementControls_Moving = m_PlayerMovementControls.FindAction("Moving", throwIfNotFound: true);
         m_PlayerMovementControls_Dash = m_PlayerMovementControls.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerMovementControls_Interact = m_PlayerMovementControls.FindAction("Interact", throwIfNotFound: true);
         // TimePowersControls
         m_TimePowersControls = asset.FindActionMap("TimePowersControls", throwIfNotFound: true);
         m_TimePowersControls_RewindTime = m_TimePowersControls.FindAction("RewindTime", throwIfNotFound: true);
@@ -297,12 +328,14 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
     private IPlayerMovementControlsActions m_PlayerMovementControlsActionsCallbackInterface;
     private readonly InputAction m_PlayerMovementControls_Moving;
     private readonly InputAction m_PlayerMovementControls_Dash;
+    private readonly InputAction m_PlayerMovementControls_Interact;
     public struct PlayerMovementControlsActions
     {
         private PlayerInputActions m_Wrapper;
         public PlayerMovementControlsActions(PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moving => m_Wrapper.m_PlayerMovementControls_Moving;
         public InputAction @Dash => m_Wrapper.m_PlayerMovementControls_Dash;
+        public InputAction @Interact => m_Wrapper.m_PlayerMovementControls_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovementControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -318,6 +351,9 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                 Dash.started -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnDash;
                 Dash.performed -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnDash;
                 Dash.canceled -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnDash;
+                Interact.started -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnInteract;
+                Interact.performed -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnInteract;
+                Interact.canceled -= m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerMovementControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -328,6 +364,9 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
                 Dash.started += instance.OnDash;
                 Dash.performed += instance.OnDash;
                 Dash.canceled += instance.OnDash;
+                Interact.started += instance.OnInteract;
+                Interact.performed += instance.OnInteract;
+                Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -410,6 +449,7 @@ public class PlayerInputActions : IInputActionCollection, IDisposable
     {
         void OnMoving(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ITimePowersControlsActions
     {

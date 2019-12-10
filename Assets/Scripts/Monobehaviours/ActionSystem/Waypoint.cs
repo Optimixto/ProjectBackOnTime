@@ -3,15 +3,17 @@
 public class Waypoint : MonoBehaviour
 {
     public ActionCollection defaultActionCollection;
-    public Vector3 ActionLocation;
     public bool isResettable = true;
+
+    [HideInInspector]
+    public Vector3 actionLocation;
 
     public bool AllActionsDone
     {
         get; private set;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         UpdateActionLocation(transform);
     }
@@ -42,7 +44,17 @@ public class Waypoint : MonoBehaviour
         AllActionsDone = defaultActionCollection.CheckIfAllActionsAreDone();
     }
 
-    public bool RequiresRotation()
+    public void UpdateActionLocation(Transform transform)
+    {
+        actionLocation = transform.position;
+    }
+
+    public void UpdateRotation(Transform referenceTransform)
+    {
+        transform.forward = referenceTransform.forward;
+    }
+
+    private bool RequiresRotation()
     {
         for (int i = 0; i < defaultActionCollection.actions.Length; i++)
         {
@@ -53,16 +65,6 @@ public class Waypoint : MonoBehaviour
         }
 
         return false;
-    }
-
-    public void UpdateActionLocation(Transform transform)
-    {
-        ActionLocation = transform.position;
-    }
-
-    public void UpdateRotation(Transform referenceTransform)
-    {
-        transform.forward = referenceTransform.forward;
     }
 
     private void OnDrawGizmosSelected()

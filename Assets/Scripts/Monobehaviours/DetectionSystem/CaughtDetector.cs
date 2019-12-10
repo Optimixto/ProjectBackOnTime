@@ -11,11 +11,17 @@ public class CaughtDetector : MonoBehaviour
     public CanvasGroup exitBackgroundImageCanvasGroup;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
 
-    private PlayerMovement playerMovement;
+    public bool isPlayerCaught;
 
-    bool isPlayerAtExit;
-    bool isPlayerCaught;
-    float timer;
+    private PlayerMovement playerMovement;
+    private PlayerInputActions inputAction;
+    private bool isPlayerAtExit;
+    private float timer;
+
+    private void Awake()
+    {
+        inputAction = new PlayerInputActions();
+    }
 
     private void Start()
     {
@@ -26,17 +32,30 @@ public class CaughtDetector : MonoBehaviour
     {
         Vector3 playerPosition = transform.parent.transform.position;
         int obstaclesLayer = LayerMask.GetMask("Obstacles");
-        
+
         if (other.CompareTag("Guard"))
         {
-            if(!Physics.Linecast(playerPosition, other.transform.position, obstaclesLayer))
+            if (!Physics.Linecast(playerPosition, other.transform.position, obstaclesLayer))
                 isPlayerCaught = true;
-        }            
+        }
         else if (other.CompareTag("Goal"))
             isPlayerAtExit = true;
+        else if (other.CompareTag("InteractiveWaypoint"))
+        {
+            if (inputAction.PlayerMovementControls.Interact.ReadValue<float>() != 0 && !other.GetComponent<PlayerWaypoint>().AllActionsDone)
+                other.GetComponent<PlayerWaypoint>().isInteracting = true;
+        }
     }
 
-    void Update()
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("InteractiveWaypoint"))
+        {
+            other.GetComponent<PlayerWaypoint>().isInteracting = false;
+        }
+    }
+
+    private void Update()
     {
         if (isPlayerAtExit)
         {
@@ -48,7 +67,7 @@ public class CaughtDetector : MonoBehaviour
         }
     }
 
-    void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart)
+    private void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart)
     {
         Time.timeScale = 0f;
         playerMovement.enabled = false;
@@ -61,7 +80,7 @@ public class CaughtDetector : MonoBehaviour
             if (doRestart)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                
+
                 Time.timeScale = 1f;
                 playerMovement.enabled = true;
             }
@@ -71,5 +90,15 @@ public class CaughtDetector : MonoBehaviour
                 Application.Quit();
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        inputAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputAction.Disable();
     }
 }

@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash()
     {
-        if(dashCounter > 0f)
+        if (dashCounter > 0f)
             return;
 
         dashCounter = dashCoolDown;

@@ -1055,3 +1055,4 @@ MonoBehaviour:
   isRewinding: 0
   isTimeStopped: 0
   caughtDetectorCollider: {fileID: 842842334}
+  timeSlowIncreaseDeterrent: 2
