@@ -1812,12 +1812,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultActionCollection: {fileID: 1002825230}
-  actionLocation: {x: 0, y: 0, z: 0}
   isResettable: 1
-  actionGameObject: {fileID: 705609146}
+  actionLocation: {x: 0, y: 0, z: 0}
   caughtDetector: {fileID: 418006706}
-  isInteracting: 0
   timeBody: {fileID: 705609152}
+  actionGameObject: {fileID: 705609146}
+  isInteracting: 0
 --- !u!43 &843782629
 Mesh:
   m_ObjectHideFlags: 0
