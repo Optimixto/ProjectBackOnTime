@@ -5,7 +5,8 @@ using UnityEngine;
 public class WaitHereAction : Action
 {
     [SerializeField]
-    private float TotalWaitTime = 1f;
+    private float totalWaitTime = 1f;
+
     private float timeWaited;
 
     protected override void SpecificInit()
@@ -20,7 +21,7 @@ public class WaitHereAction : Action
 
     protected override bool PerformAction()
     {
-        if (timeWaited >= TotalWaitTime)
+        if (timeWaited >= totalWaitTime)
         {
             return true;
         }

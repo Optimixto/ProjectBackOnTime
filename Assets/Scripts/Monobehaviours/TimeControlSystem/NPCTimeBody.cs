@@ -9,6 +9,8 @@ public class NPCTimeBody : TimeBody
 
     private NPC npcScript;
 
+    protected Rigidbody rb;
+
     protected override void Start()
     {
         StatesInTime = new List<NPCStateInTime>();
@@ -21,13 +23,13 @@ public class NPCTimeBody : TimeBody
     {
         if (StatesInTime.Count > 0)
         {
+            rb.isKinematic = true;
+
             npcScript.AIAnimator.SetBool("TimeRewinding", true);
             CurrentStateInTime = StatesInTime[0];
 
-            transform.position = CurrentStateInTime.position;
-            transform.rotation = CurrentStateInTime.rotation;
-            npcScript.routine.currentWaypointIndex = CurrentStateInTime.routineWaypointIndex;
-            npcScript.playerDetector.SetStatusTimer(CurrentStateInTime.statusTimer);
+            CurrentStateInTime.ApplyState(transform, npcScript);
+
             StatesInTime.RemoveAt(0);
         }
         else
@@ -39,9 +41,7 @@ public class NPCTimeBody : TimeBody
     protected override void Record()
     {
         if (StatesInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
-        {
             StatesInTime.RemoveAt(StatesInTime.Count - 1);
-        }
 
         StatesInTime.Insert(0, new NPCStateInTime(transform.position, transform.rotation, npcScript.routine.currentWaypointIndex, npcScript.playerDetector.StatusTimer));
     }

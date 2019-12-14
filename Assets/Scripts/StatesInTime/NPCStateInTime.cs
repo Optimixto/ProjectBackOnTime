@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NPCStateInTime : StateInTime
+public class NPCStateInTime : StateInTimeTransform
 {
     public int routineWaypointIndex;
     public float statusTimer;
@@ -9,5 +9,12 @@ public class NPCStateInTime : StateInTime
     {
         routineWaypointIndex = index;
         statusTimer = _statusTimer;
+    }
+
+    public void ApplyState(Transform transform, NPC npcScript)
+    {
+        base.ApplyState(transform);
+        npcScript.routine.currentWaypointIndex = routineWaypointIndex;
+        npcScript.playerDetector.SetStatusTimer(statusTimer);
     }
 }

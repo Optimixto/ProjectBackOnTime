@@ -23,12 +23,6 @@ public class PlayerWaypoint : Waypoint
         UpdateActionLocation(actionGameObject.transform);
     }
 
-    private void FixedUpdate()
-    {
-        Debug.Log("isInteracting: " + isInteracting);
-        Debug.Log("actions done: " + AllActionsDone);
-    }
-
     private void Update()
     {
         if (AllActionsDone)

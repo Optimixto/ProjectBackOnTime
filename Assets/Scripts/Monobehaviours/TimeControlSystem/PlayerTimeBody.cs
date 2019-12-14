@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerTimeBody : TimeBody
 {
+    protected new List<StateInTimeTransform> StatesInTime;
+    protected new StateInTimeTransform CurrentStateInTime;
+
     public Collider caughtDetectorCollider;
     public float timeSlowIncreaseDeterrent = 2f;
 
@@ -10,7 +14,7 @@ public class PlayerTimeBody : TimeBody
 
     protected override void Start()
     {
-        base.Start();
+        StatesInTime = new List<StateInTimeTransform>();
 
         characterController = GetComponent<CharacterController>();
         playerMovementScript = GetComponent<PlayerMovement>();
@@ -28,6 +32,30 @@ public class PlayerTimeBody : TimeBody
     {
         float currentPercentage = (timeStopTimer / timeStopMax);
         return currentPercentage;
+    }
+
+    protected override void Rewind()
+    {
+        if (StatesInTime.Count > 0)
+        {
+            CurrentStateInTime = StatesInTime[0];
+
+            CurrentStateInTime.ApplyState(transform);
+
+            StatesInTime.RemoveAt(0);
+        }
+        else
+        {
+            StopRewind();
+        }
+    }
+
+    protected override void Record()
+    {
+        if (StatesInTime.Count >= Mathf.Round(recordTime / Time.fixedDeltaTime))
+            StatesInTime.RemoveAt(StatesInTime.Count - 1);
+
+        StatesInTime.Insert(0, new StateInTimeTransform(transform.position, transform.rotation));
     }
 
     protected override void StartRewind()

@@ -18,7 +18,6 @@ public class TimeBody : MonoBehaviour
     public bool isRewinding = false;
     public bool isTimeStopped = false;
 
-    protected Rigidbody rb;
     protected PlayerInputActions inputAction;
 
     protected void Awake()
@@ -31,7 +30,6 @@ public class TimeBody : MonoBehaviour
     protected virtual void Start()
     {
         StatesInTime = new List<StateInTime>();
-        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -54,12 +52,10 @@ public class TimeBody : MonoBehaviour
     {
         if (StatesInTime.Count > 0)
         {
-            rb.isKinematic = true;
-
             CurrentStateInTime = StatesInTime[0];
 
-            transform.position = CurrentStateInTime.position;
-            transform.rotation = CurrentStateInTime.rotation;
+            CurrentStateInTime.ApplyState();
+
             StatesInTime.RemoveAt(0);
         }
         else
@@ -73,7 +69,7 @@ public class TimeBody : MonoBehaviour
         if (StatesInTime.Count >= Mathf.Round(recordTime / Time.fixedDeltaTime))
             StatesInTime.RemoveAt(StatesInTime.Count - 1);
 
-        StatesInTime.Insert(0, new StateInTime(transform.position, transform.rotation));
+        StatesInTime.Insert(0, new StateInTime());
     }
 
     protected virtual void StartRewind()
@@ -84,7 +80,6 @@ public class TimeBody : MonoBehaviour
     protected virtual void StopRewind()
     {
         isRewinding = false;
-        rb.isKinematic = false;
     }
 
     protected virtual void StopTime()
