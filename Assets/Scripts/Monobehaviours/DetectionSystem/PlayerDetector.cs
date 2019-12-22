@@ -57,6 +57,7 @@ public class PlayerDetector : MonoBehaviour
             npcScript.AIAnimator.SetBool("SeeingPlayer", true);
             npcScript.AIAnimator.SetBool("DoneInvestigating", false);
             npcScript.StopMovement();
+            npcScript.LastKnownPositionWaypoint.transform.position = Player.position;
             npcScript.LastKnownPositionWaypoint.UpdateActionLocation(Player);
             RaiseCurrentStatusTimer();
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7752006204931610320}
-  - component: {fileID: 7752006204931610321}
+  - component: {fileID: 1002825230}
   m_Layer: 0
   m_Name: Actions
   m_TagString: InteractiveWaypoint
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 7752006205179546976}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7752006204931610321
+--- !u!114 &1002825230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c972689396c4844b775ffda40e906e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultActionCollection: {fileID: 7752006204931610321}
+  defaultActionCollection: {fileID: 1002825230}
   isResettable: 1
   actionLocation: {x: 0, y: 0, z: 0}
   caughtDetector: {fileID: 0}
@@ -391,3 +391,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRewinding: 0
   isTimeStopped: 0
+  myWaypoint: {fileID: 7752006205179546910}

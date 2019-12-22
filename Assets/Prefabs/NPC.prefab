@@ -207,7 +207,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -219,8 +219,8 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344088714211625014}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.4
   m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -308,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 344088714832738234}
-  - component: {fileID: 344088714015094795}
+  - component: {fileID: 1738983882}
   m_Layer: 0
   m_Name: Investigate
   m_TagString: Untagged
@@ -330,7 +330,7 @@ Transform:
   m_Father: {fileID: 344088715021869383}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &344088714015094795
+--- !u!114 &1738983882
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344088715021869382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: -0.7071081, y: -1, z: -0.70710546}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 344088714832738234}
@@ -389,5 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57140810c83ce0441a1bf172ac2a66a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultActionCollection: {fileID: 344088714015094795}
-  Location: {x: 0, y: 0, z: 0}
+  defaultActionCollection: {fileID: 1738983882}
+  isResettable: 1
+  actionLocation: {x: 0, y: 0, z: 0}
