@@ -1,0 +1,55 @@
+{
+    "name": "TitleScreenInput",
+    "maps": [
+        {
+            "name": "TitleScreen",
+            "id": "959a68ab-79c8-4691-aeff-e84688bbe073",
+            "actions": [
+                {
+                    "name": "Enter",
+                    "type": "Button",
+                    "id": "8fb6c0c2-a043-4e19-b9a2-25c327608faf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "11b744dd-0b81-4744-9d67-4eb2089b8ac1",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "454dee82-a6d1-4bad-979d-8c9e1a9cf518",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d6ceda4-1716-4287-a243-16cb6f5e45e7",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
